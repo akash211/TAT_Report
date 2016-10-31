@@ -1,0 +1,25 @@
+Sub VinCulumDate()
+'
+' VinCulumDate Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+V
+'
+    ActiveCell.Offset(0, 1).Columns("A:A").EntireColumn.Select
+    Selection.Insert Shift:=xlToRight
+    ActiveCell.Select
+    Selection.FormulaR1C1 = "=RC[-1]"
+    ActiveCell.Offset(1, 0).Range("A1").Select
+    Selection.FormulaR1C1 = _
+        "=IF(RC[-1]="""","""",DATEVALUE(RC[-1])+TIMEVALUE(RC[-1]))"
+    ActiveCell.Offset(0, -1).Range("A1").Select
+    Selection.End(xlDown).Select
+    ActiveCell.Offset(0, 1).Range("A1").Select
+    Range(Selection, Selection.End(xlUp)).Select
+    Selection.FillDown
+    Selection.NumberFormat = "dd/mmm/yyyy hh:mm"
+    Selection.End(xlUp).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+End Sub
